@@ -216,6 +216,7 @@ public class List {
     // }
     // return false;
     // }
+
     /**
      * Remueve el primer elemento de la lista y lo devuelve.
      *
@@ -253,9 +254,7 @@ public class List {
         List removidos = new List(cantidad);
 
         // Copiar los elementos que se eliminan
-        for (int i = 0; i < cantidad; i++) {
-            removidos.elementos[i] = elementos[inicio + i];
-        }
+        System.arraycopy(elementos, inicio + 0, removidos.elementos, 0, cantidad);
         removidos.contador = cantidad;
 
         // Desplazar a la izquierda los elementos posteriores a 'fin'

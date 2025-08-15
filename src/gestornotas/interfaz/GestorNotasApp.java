@@ -1,6 +1,7 @@
 package gestornotas.interfaz;
 
 import gestornotas.mundo.Gestor;
+
 import java.util.Scanner;
 
 public class GestorNotasApp {
@@ -9,7 +10,7 @@ public class GestorNotasApp {
         Scanner sc = new Scanner(System.in);
 
         int capacidadMaxima, opcion, encontrado;
-        int notas[] = new int[3];
+        int[] notas = new int[3];
 
         System.out.println("Ingrese la capacidad máxima del curso: ");
         capacidadMaxima = sc.nextInt();
@@ -62,8 +63,7 @@ public class GestorNotasApp {
             case 6 -> {
                 // Salir
             }
-            default ->
-                throw new AssertionError();
+            default -> throw new AssertionError();
         }
     }
 }

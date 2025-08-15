@@ -3,8 +3,8 @@ package gestornotas.mundo;
 public class Gestor {
 
     private final int CAPACIDAD_MAXIMA;
-    private String nombres[];
-    private final int planilla[][];
+    private final int[][] planilla;
+    private String[] nombres;
     private int numeroEstudiantes;
 
     // Constructor
@@ -15,15 +15,11 @@ public class Gestor {
         numeroEstudiantes = 0;
     }
 
-    ;
-
     public void insertarEstudiante(String nombre) {
         if (!cursoLleno()) {
             nombres[numeroEstudiantes++] = nombre;
         }
     }
-
-    ;
 
     public void eliminarEstudiante(String estudiante) {
         if (estudiante == null || estudiante.isEmpty()) {
@@ -53,19 +49,13 @@ public class Gestor {
         nombres = nuevoArreglo;
     }
 
-    ;
-
     public boolean cursoLleno() {
         return numeroEstudiantes == CAPACIDAD_MAXIMA;
     }
 
-    ;
-
     public int getNumeroEstudiantes() {
         return numeroEstudiantes;
     }
-
-    ;
 
     public int buscarEstudiante(String estudiante) {
         for (int i = 0; i < numeroEstudiantes; i++) {
@@ -76,9 +66,7 @@ public class Gestor {
         return -1;
     }
 
-    ;
-
-    public String insertarNotas(String nombre, int notas[]) {
+    public String insertarNotas(String nombre, int[] notas) {
 
         int encontrado = buscarEstudiante(nombre);
 
@@ -94,8 +82,6 @@ public class Gestor {
         return "Las notas se actualizaron correctamente";
     }
 
-    ;
-
     public String mostrarNotasPorEstudiante(String nombre) {
         int encontrado = buscarEstudiante(nombre);
         String salida = "ERROR: El estudiante no existe";
@@ -107,8 +93,6 @@ public class Gestor {
         }
         return salida;
     }
-
-    ;
 
     // Convierte una cadena de caracteres
     @Override
@@ -127,5 +111,6 @@ public class Gestor {
         }
 
         return salida;
-    };
+    }
+
 }

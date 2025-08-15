@@ -2,7 +2,7 @@ package estructurasdatos.stack;
 
 public class FixedCapacityStackOfStrings {
 
-    private String[] elements;
+    private final String[] elements;
     private int count;
 
     public FixedCapacityStackOfStrings(int capacity) {

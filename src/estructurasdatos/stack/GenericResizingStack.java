@@ -49,9 +49,7 @@ public class GenericResizingStack<T> {
 
     private void resize(int newCapacity) {
         T[] temp = (T[]) new Object[newCapacity];
-        for (int i = 0; i < count; i++) {
-            temp[i] = elements[i];
-        }
+        if (count >= 0) System.arraycopy(elements, 0, temp, 0, count);
         elements = temp;
     }
 

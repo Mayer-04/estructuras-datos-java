@@ -1,8 +1,8 @@
 package estructurasdatos.queue;
 
 public class Queue {
-    private String[] elementos;
-    private int contador;
+    private final String[] elementos;
+    private final int contador;
 
     public Queue(int capacidad) {
         elementos = new String[capacidad];

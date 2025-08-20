@@ -249,7 +249,7 @@ public class List<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ReverseArrayIterator();
+        return new ArrayIterator();
     }
 
     /**
@@ -277,17 +277,17 @@ public class List<T> implements Iterable<T> {
         return output.toString();
     }
 
-    private class ReverseArrayIterator implements Iterator<T> {
-        private int index = size - 1;
+    private class ArrayIterator implements Iterator<T> {
+        private int index = 0;
 
         @Override
         public boolean hasNext() {
-            return index >= 0;
+            return index < size;
         }
 
         @Override
         public T next() {
-            return elements[index--];
+            return elements[index++];
         }
     }
 }

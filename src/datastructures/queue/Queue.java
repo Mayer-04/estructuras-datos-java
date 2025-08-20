@@ -73,7 +73,7 @@ public class Queue<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new ReverseArrayIterator();
+        return new ArrayIterator();
     }
 
     @Override
@@ -96,17 +96,17 @@ public class Queue<T> implements Iterable<T> {
         return "queue: " + output;
     }
 
-    private class ReverseArrayIterator implements Iterator<T> {
-        private int index = size - 1;
+    private class ArrayIterator implements Iterator<T> {
+        private int index = 0;
 
         @Override
         public boolean hasNext() {
-            return index >= 0;
+            return index < size;
         }
 
         @Override
         public T next() {
-            return elements[index--];
+            return elements[index++];
         }
     }
 }

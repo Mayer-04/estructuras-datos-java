@@ -11,6 +11,11 @@ public class Main {
         bag.add(8);
 
         System.out.println(bag); // Output: bag [2,4,6,8]
+
+        for (Integer element : bag) {
+            System.out.println("element: " + element);
+        }
+
         System.out.println(bag.size()); // Output: 4
 
         System.out.println(bag.contains(10)); // Output: false

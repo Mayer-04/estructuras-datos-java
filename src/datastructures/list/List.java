@@ -1,78 +1,67 @@
 package datastructures.list;
 
-public class List {
+import java.util.Iterator;
 
-    private String[] elementos;
-    private int contador;
+@SuppressWarnings("unchecked")
+public class List<T> implements Iterable<T> {
 
-    public List(int capacidad) {
-        elementos = new String[capacidad];
-        contador = 0;
+    private T[] elements;
+    private int size;
+
+    public List() {
+        elements = (T[]) new Object[1];
+        size = 0;
     }
 
     /**
-     * Agrega un elemento en una posición indicada.
+     * Agregar un elemento en una posición indicada.
      *
-     * @param indice   El índice donde se insertará el elemento
-     * @param elemento El elemento a insertar
-     * @throws IndexOutOfBoundsException Si el índice es negativo o mayor que el
-     *                                   tamaño actual de la lista
-     * @throws NullPointerException      Si el elemento a insertar es nulo
+     * @param index   el índice donde se insertará el elemento
+     * @param element el elemento a insertar
      */
-    public void adicionar(int indice, String elemento) {
-        Validations.indiceInsercion(indice, contador);
-        Validations.elementoNoNulo(elemento);
-
-        elementos[indice] = elemento.trim();
-        contador++;
+    public void add(int index, T element) {
+        if (size == elements.length) {
+            resize(elements.length * 2);
+        }
+        elements[index] = element;
+        size++;
     }
 
     /**
-     * Agrega un elemento al inicio de la lista.
-     * <p>
-     * El elemento no puede ser nulo; se lanza
-     * <strong>NullPointerException</strong> si lo es.
-     * </p>
+     * Agregar un elemento al inicio de la lista.
      *
-     * @param elemento El elemento a insertar
-     * @throws NullPointerException Si el elemento es nulo
+     * @param element el elemento a insertar
      */
-    public void adicionarInicio(String elemento) {
-        adicionar(0, elemento);
+    public void addFirst(T element) {
+        add(0, element);
     }
 
     /**
-     * Agrega un elemento al final de la lista.
-     * <p>
-     * El elemento no puede ser nulo; se lanza NullPointerException si lo es.
-     * </p>
+     * Agregar un elemento al final de la lista.
      *
-     * @param elemento El elemento a insertar
-     * @throws NullPointerException Si el elemento es nulo
+     * @param element el elemento a insertar
      */
-    public void adicionarFinal(String elemento) {
-        adicionar(contador, elemento);
+    public void addLast(T element) {
+        add(size, element);
     }
 
     /**
      * Eliminar todos los elementos de la lista.
      */
-    public void vaciar() {
-        elementos = new String[elementos.length];
-        contador = 0;
+    public void clear() {
+        elements = (T[]) new Object[elements.length];
+        size = 0;
     }
 
     /**
      * Verifica si la lista contiene un elemento.
      *
-     * @param elemento El elemento a buscar
+     * @param element el elemento a buscar
      * @return true si el elemento se encuentra en la lista, false si no
-     * @throws NullPointerException Si el elemento es nulo
      */
-    public boolean contiene(String elemento) {
-        Validations.elementoNoNulo(elemento);
-        for (String valor : elementos) {
-            if (valor != null && valor.equals(elemento)) {
+    public boolean contains(T element) {
+        for (T value : elements) {
+            if (value != null && value.equals(element)) {
                 return true;
             }
         }
@@ -82,49 +71,40 @@ public class List {
     /**
      * Obtiene el elemento de la lista en la posición indicada.
      *
-     * @param indice El índice del elemento a obtener
-     * @return El elemento en la posición indicada
-     * @throws IndexOutOfBoundsException Si el índice es negativo o mayor o
-     *                                   igual al tamaño actual de la lista
-     * @throws NullPointerException      Si el elemento en la posición indicada es
-     *                                   nulo
+     * @param index el índice del elemento a obtener
+     * @return el elemento en la posición indicada
      */
-    public String obtener(int indice) {
-        Validations.indiceAcceso(indice, contador);
-
-        var elemento = elementos[indice];
-        Validations.elementoNoNulo(elemento);
-
-        return elemento;
+    public T get(int index) {
+        return elements[index];
     }
 
     /**
      * Obtiene el primer elemento de la lista.
      *
-     * @return El primer elemento de la lista
+     * @return el primer elemento de la lista
      */
-    public String obtenerPrimero() {
-        return obtener(0);
+    public T getFirst() {
+        return get(0);
     }
 
     /**
      * Obtiene el último elemento de la lista.
      *
-     * @return El último elemento de la lista
+     * @return el último elemento de la lista
      */
-    public String obtenerUltimo() {
-        return obtener(contador - 1);
+    public T getLast() {
+        return get(size - 1);
     }
 
     /**
      * Busca el elemento en la lista y devuelve su posición.
      *
-     * @param elemento El elemento a buscar
-     * @return La posición del elemento si lo encuentra, -1 si no lo encuentra
+     * @param element el elemento a buscar
+     * @return la posición del elemento si lo encuentra, -1 si no lo encuentra
      */
-    public int buscar(String elemento) {
-        for (int i = 0; i < contador; i++) {
-            if (elementos[i].equals(elemento)) {
+    public int indexOf(T element) {
+        for (int i = 0; i < size; i++) {
+            if (elements[i].equals(element)) {
                 return i;
             }
         }
@@ -137,63 +117,54 @@ public class List {
      * @return true si la lista no contiene elementos, false si contiene al
      * menos uno
      */
-    public boolean estaVacia() {
-        return contador == 0;
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     /**
      * Remueve y devuelve el elemento de la posición indicada.
      *
-     * @param indice El índice del elemento a remover
-     * @return El elemento que fue removido
-     * @throws IndexOutOfBoundsException Si el índice es negativo o mayor o
-     *                                   igual al tamaño de la lista
+     * @param index el índice del elemento a remover
+     * @return el elemento que fue removido
      */
-    public String remover(int indice) {
-        // 1. Validamos que el índice esté dentro del rango permitido (0 a contador - 1).
-        // Esto evita errores al acceder a posiciones inválidas del arreglo.
-        Validations.indiceAcceso(indice, contador);
+    public T removeAt(int index) {
+        // 1. Guardamos el elemento que se encuentra en la posición indicada.
+        var element = elements[index];
 
-        // 2. Guardamos el elemento que se encuentra en la posición indicada.
-        var elemento = elementos[indice];
+        // 2. Creamos un nuevo arreglo con un espacio menos, ya que vamos a eliminar un elemento.
+        T[] newArray = (T[]) new Object[size - 1];
 
-        // 3. Creamos un nuevo arreglo con un espacio menos, ya que vamos a eliminar un elemento.
-        String[] nuevoArreglo = new String[contador - 1];
-
-        // 4. Copiamos todos los elementos del arreglo original al nuevo,
+        // 3. Copiamos todos los elementos del arreglo original al nuevo,
         // excepto el que está en la posición que queremos eliminar.
-        var nuevoIndice = 0;
-        for (int i = 0; i < contador; i++) {
-            if (i == indice) {
+        var newIndex = 0;
+        for (int i = 0; i < size; i++) {
+            if (i == index) {
                 continue;
             }
-            nuevoArreglo[nuevoIndice] = elementos[i];
-            nuevoIndice++;
+            newArray[newIndex] = elements[i];
+            newIndex++;
         }
 
-        // 5. Actualizamos el contador para reflejar que hay un elemento menos.
-        contador--;
+        // 4. Actualizamos el contador para reflejar que hay un elemento menos.
+        size--;
 
-        // 6. Reemplazamos el arreglo original por el nuevo.
-        elementos = nuevoArreglo;
+        // 5. Reemplazamos el arreglo original por el nuevo.
+        elements = newArray;
 
-        // 7. Devolvemos el elemento que fue eliminado.
-        return elemento;
+        // 6. Devolvemos el elemento que fue eliminado.
+        return element;
     }
 
     /**
      * Remueve un elemento específico de la lista.
      *
-     * @param elemento El elemento a remover
+     * @param element el elemento a remover
      * @return true si el elemento fue removido, false si no se encontró
-     * @throws NullPointerException Si el elemento es nulo
      */
-    public boolean remover(String elemento) {
-        Validations.elementoNoNulo(elemento);
-
-        int indice = buscar(elemento);
-        if (indice != -1) {
-            remover(indice);
+    public boolean remove(T element) {
+        int index = indexOf(element);
+        if (index != -1) {
+            removeAt(index);
             return true;
         }
         return false;
@@ -202,105 +173,121 @@ public class List {
     /**
      * Remueve el primer elemento de la lista y lo devuelve.
      *
-     * @return El elemento removido
+     * @return el elemento removido
      */
-    public String removerPrimero() {
-        return remover(0);
+    public T removeFirst() {
+        return removeAt(0);
     }
 
     /**
      * Remueve el último elemento de la lista y lo devuelve.
      *
-     * @return El elemento removido
+     * @return el elemento removido
      */
-    public String removerUltimo() {
-        return remover(contador - 1);
+    public T removeLast() {
+        return removeAt(size - 1);
     }
 
     /**
      * Remueve un rango de elementos y devuelve una nueva lista con ellos.
      *
-     * @param inicio Índice inicial (inclusive)
-     * @param fin    Índice final (exclusive)
-     * @return Nueva lista con los elementos removidos
+     * @param start índice inicial (inclusive)
+     * @param end   índice final (exclusive)
+     * @return nueva lista con los elementos removidos
      */
-    public List removerIntervalo(int inicio, int fin) {
-        if (inicio < 0 || fin > contador || inicio >= fin) {
-            throw new IndexOutOfBoundsException(Constants.INDICE_FUERA_DE_RANGO);
-        }
-        int cantidad = fin - inicio;
-        List removidos = new List(cantidad);
+    public List<T> removeRange(int start, int end) {
+        int count = end - start;
+        var removed = new List<T>();
 
         // Copiar los elementos que se eliminan
-        System.arraycopy(elementos, inicio, removidos.elementos, 0, cantidad);
-        removidos.contador = cantidad;
+        System.arraycopy(elements, start, removed.elements, 0, count);
+        removed.size = count;
 
-        // Desplazar a la izquierda los elementos posteriores a 'fin'
-        for (int i = fin; i < contador; i++) {
-            elementos[i - cantidad] = elementos[i];
+        // Desplazar a la izquierda los elementos posteriores a 'end'
+        for (int i = end; i < size; i++) {
+            elements[i - count] = elements[i];
         }
 
         // Limpiar el resto
-        for (int i = contador - cantidad; i < contador; i++) {
-            elementos[i] = null;
+        for (int i = size - count; i < size; i++) {
+            elements[i] = null;
         }
 
-        contador -= cantidad;
-        return removidos;
+        size -= count;
+        return removed;
     }
 
     /**
      * Modifica un elemento de la lista en la posición indicada.
      *
-     * @param indice   El índice del elemento a modificar
-     * @param elemento El nuevo valor del elemento
-     * @throws IndexOutOfBoundsException Si el índice es negativo o mayor o
-     *                                   igual al tamaño de la lista
-     * @throws NullPointerException      Si el nuevo elemento es nulo
+     * @param index   el índice del elemento a modificar
+     * @param element el nuevo valor del elemento
      */
-    public void modificar(int indice, String elemento) {
-        Validations.indiceAcceso(indice, contador);
-        Validations.elementoNoNulo(elemento);
-        elementos[indice] = elemento;
+    public void set(int index, T element) {
+        elements[index] = element;
     }
 
     /**
      * Devuelve el número de elementos en la lista.
      *
-     * @return La cantidad de elementos que contiene la lista
+     * @return la cantidad de elementos que contiene la lista
      */
-    public int tamaño() {
-        return contador;
+    public int size() {
+        return size;
+    }
+
+    private void resize(int newCapacity) {
+        T[] newArray = (T[]) new Object[newCapacity];
+
+        // if (size >= 0) System.arraycopy(elements, 0, newArray, 0, size);
+        for (int i = 0; i < size; i++) {
+            newArray[i] = elements[i];
+        }
+
+        elements = newArray;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ReverseArrayIterator();
     }
 
     /**
      * Devuelve una representación en cadena de la lista.
      *
-     * @return Una cadena que representa la lista y su total de elementos
+     * @return una cadena que representa la lista y su total de elementos
      */
     @Override
     public String toString() {
-        final StringBuilder salida = new StringBuilder("list: [");
-        for (int i = 0; i < contador; i++) {
-            salida.append(elementos[i]);
-            if (i < contador - 1) {
-                salida.append(", ");
+        final StringBuilder output = new StringBuilder("list: [");
+        for (int i = 0; i < size; i++) {
+            T element = elements[i];
+
+            if (element instanceof String s) {
+                output.append('"').append(s).append('"');
+            } else {
+                output.append(element);
+            }
+
+            if (i < size - 1) {
+                output.append(", ");
             }
         }
-        salida.append("]");
-        return salida.toString();
+        output.append("]");
+        return output.toString();
     }
 
-    // @Override
-    // public String toString() {
-    // String salida = "[";
-    // for (int i = 0; i < contador; i++) {
-    // salida += elementos[i];
-    // if (i < contador - 1) {
-    // salida += ", ";
-    // }
-    // }
-    // salida += "]";
-    // return "list: " + salida;
-    // }
+    private class ReverseArrayIterator implements Iterator<T> {
+        private int index = size - 1;
+
+        @Override
+        public boolean hasNext() {
+            return index >= 0;
+        }
+
+        @Override
+        public T next() {
+            return elements[index--];
+        }
+    }
 }

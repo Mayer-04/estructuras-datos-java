@@ -4,56 +4,57 @@ package datastructures.stack;
 public class GenericResizingStack<T> {
 
     private T[] elements;
-    private int count;
+    private int size;
 
     public GenericResizingStack() {
         elements = (T[]) new Object[1];
-        count = 0;
+        size = 0;
     }
 
     public void push(T item) {
-        if (count == elements.length) {
+        if (size == elements.length) {
             resize(2 * elements.length);
         }
-        elements[count] = item;
-        count++;
+        elements[size] = item;
+        size++;
     }
 
     public T pop() {
-        T item = elements[--count];
+        T item = elements[--size];
 
-        elements[count] = null;
-        if (count > 0 && count == elements.length / 4) {
+        elements[size] = null;
+        if (size > 0 && size == elements.length / 4) {
             resize(elements.length / 2);
         }
         return item;
     }
 
     public boolean isEmpty() {
-        return count == 0;
+        return size == 0;
     }
 
     public int size() {
-        return count;
+        return size;
     }
 
     public T peak() {
-        return elements[count - 1];
+        return elements[size - 1];
     }
 
     private void resize(int newCapacity) {
         T[] newArray = (T[]) new Object[newCapacity];
-
-        for (int i = 0; i < count; i++) {
+        
+        for (int i = 0; i < size; i++) {
             newArray[i] = elements[i];
         }
+
         elements = newArray;
     }
 
     @Override
     public String toString() {
         StringBuilder salida = new StringBuilder("[");
-        for (int i = count - 1; i > 0; i--) {
+        for (int i = size - 1; i >= 0; i--) {
             T element = elements[i];
 
             if (element instanceof String s) {
@@ -62,7 +63,7 @@ public class GenericResizingStack<T> {
                 salida.append(element);
             }
 
-            if (i < count - 1) {
+            if (i < size - 1) {
                 salida.append(", ");
             }
         }

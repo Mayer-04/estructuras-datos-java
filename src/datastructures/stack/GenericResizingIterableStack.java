@@ -5,49 +5,50 @@ import java.util.Iterator;
 @SuppressWarnings("unchecked")
 public class GenericResizingIterableStack<T> implements Iterable<T> {
     private T[] elements;
-    private int count;
+    private int size;
 
     public GenericResizingIterableStack() {
         elements = (T[]) new Object[1];
-        count = 0;
+        size = 0;
     }
 
     public void push(T item) {
-        if (count == elements.length) {
+        if (size == elements.length) {
             resize(2 * elements.length);
         }
-        elements[count] = item;
-        count++;
+        elements[size] = item;
+        size++;
     }
 
     public T pop() {
-        T item = elements[--count];
+        T item = elements[--size];
 
-        elements[count] = null;
-        if (count > 0 && count == elements.length / 4) {
+        elements[size] = null;
+        if (size > 0 && size == elements.length / 4) {
             resize(elements.length / 2);
         }
         return item;
     }
 
     public boolean isEmpty() {
-        return count == 0;
+        return size == 0;
     }
 
     public int size() {
-        return count;
+        return size;
     }
 
     public T peak() {
-        return elements[count - 1];
+        return elements[size - 1];
     }
 
     private void resize(int newCapacity) {
         T[] newArray = (T[]) new Object[newCapacity];
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < size; i++) {
             newArray[i] = elements[i];
         }
+
         elements = newArray;
     }
 
@@ -57,7 +58,7 @@ public class GenericResizingIterableStack<T> implements Iterable<T> {
     }
 
     private class ReverseArrayIterator implements Iterator<T> {
-        private int index = count - 1;
+        private int index = size - 1;
 
         @Override
         public boolean hasNext() {

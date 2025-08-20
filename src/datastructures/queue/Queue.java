@@ -1,61 +1,36 @@
 package datastructures.queue;
 
+import java.util.Iterator;
+
 // FIFO (First in, First Out)
 @SuppressWarnings("unchecked")
-public class Queue<T> {
+public class Queue<T> implements Iterable<T> {
     private T[] elements;
-    private int count;
+    private int size;
 
     public Queue() {
         elements = (T[]) new Object[1];
-        count = 0;
+        size = 0;
     }
 
     public void enqueue(T item) {
-        if (count == elements.length) {
+        if (size == elements.length) {
             resize(elements.length * 2);
         }
-        elements[count] = item;
-        count++;
+        elements[size] = item;
+        size++;
     }
 
-    /**
-     * Elimina y devuelve el elemento al frente de la cola.
-     * Todos los elementos restantes se desplazan una posición hacia la izquierda
-     * para mantener la estructura de la cola.
-     *
-     * @return el elemento que estaba al frente de la cola.
-     * @throws EmptyQueueException si la cola está vacía.
-     * @see #isEmpty()
-     */
     public T dequeue() {
-        if (isEmpty()) {
-            throw new EmptyQueueException("The queue is empty");
-        }
-
         var item = elements[0];
 
-        for (int i = 1; i < count; i++) {
+        for (int i = 1; i < size; i++) {
             elements[i - 1] = elements[i];
         }
 
-        elements[count - 1] = null;
+        elements[size - 1] = null;
 
-        count--;
-
-        return item;
-    }
-
-    public T dequeueTwo() {
-        var item = elements[0];
-
-        for (int i = 0; i < count - 1; i++) {
-            elements[i] = elements[i + 1];
-        }
-
-        elements[count - 1] = null;
-
-        count--;
+        size--;
 
         return item;
     }
@@ -64,22 +39,17 @@ public class Queue<T> {
      * Devuelve el elemento al frente de la cola sin eliminarlo.
      *
      * @return el elemento al frente de la cola
-     * @throws EmptyQueueException si la cola está vacía
-     * @see #isEmpty()
      */
     public T peek() {
-        if (isEmpty()) {
-            throw new EmptyQueueException("The queue is empty");
-        }
         return elements[0];
     }
 
     public int size() {
-        return count;
+        return size;
     }
 
     public boolean isEmpty() {
-        return count == 0;
+        return size == 0;
     }
 
     public void clear() {
@@ -87,22 +57,29 @@ public class Queue<T> {
         for (int i = 0; i < size(); i++) {
             elements[i] = null;
         }
-        count = 0;
+        size = 0;
     }
 
     private void resize(int newCapacity) {
         T[] newArray = (T[]) new Object[newCapacity];
 
-        for (int i = 0; i < count; i++) {
+        // if (size >= 0) System.arraycopy(elements, 0, newArray, 0, size);
+        for (int i = 0; i < size; i++) {
             newArray[i] = elements[i];
         }
 
         elements = newArray;
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new ReverseArrayIterator();
+    }
+
+    @Override
     public String toString() {
         StringBuilder output = new StringBuilder("[");
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < size; i++) {
             T element = elements[i];
 
             if (element instanceof String s) {
@@ -111,11 +88,25 @@ public class Queue<T> {
                 output.append(element);
             }
 
-            if (i < count - 1) {
+            if (i < size - 1) {
                 output.append(", ");
             }
         }
         output.append("]");
         return "queue: " + output;
+    }
+
+    private class ReverseArrayIterator implements Iterator<T> {
+        private int index = size - 1;
+
+        @Override
+        public boolean hasNext() {
+            return index >= 0;
+        }
+
+        @Override
+        public T next() {
+            return elements[index--];
+        }
     }
 }

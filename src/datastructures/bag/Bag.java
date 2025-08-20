@@ -1,29 +1,25 @@
 package datastructures.bag;
 
+import java.util.Iterator;
+
 @SuppressWarnings("unchecked")
-public class Bag<T> {
+public class Bag<T> implements Iterable<T> {
 
     private T[] elements;
-    private int count;
+    private int size;
 
     public Bag() {
         elements = (T[]) new Object[1];
-        count = 0;
+        size = 0;
     }
 
     public void add(T item) {
         // Objects.requireNonNull(item, "El elemento no puede ser nulo");
-
-        if (item == null) {
-            throw new NullPointerException("El elemento no puede ser nulo");
-        }
-
-        if (count == elements.length) {
+        if (size == elements.length) {
             resize(elements.length * 2);
         }
-
-        elements[count] = item;
-        count++;
+        elements[size] = item;
+        size++;
     }
 
     public boolean contains(T item) {
@@ -36,34 +32,40 @@ public class Bag<T> {
     }
 
     public boolean isEmpty() {
-        return count == 0;
+        return size == 0;
     }
 
     public int size() {
-        return count;
+        return size;
     }
 
     public void clear() {
         // elements = new String[elements.length];
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < size; i++) {
             elements[i] = null;
         }
-        count = 0;
+        size = 0;
     }
 
     private void resize(int newCapacity) {
         T[] newArray = (T[]) new Object[newCapacity];
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < size; i++) {
             newArray[i] = elements[i];
         }
 
         elements = newArray;
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new ReverseArrayIterator();
+    }
+
+    @Override
     public String toString() {
         StringBuilder output = new StringBuilder("[");
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < size; i++) {
             T element = elements[i];
             if (element instanceof String s) {
                 output.append('"').append(s).append('"');
@@ -71,11 +73,25 @@ public class Bag<T> {
                 output.append(element);
             }
 
-            if (i < count - 1) {
+            if (i < size - 1) {
                 output.append(", ");
             }
         }
         output.append("]");
         return "bag: " + output;
+    }
+
+    private class ReverseArrayIterator implements Iterator<T> {
+        private int index = size - 1;
+
+        @Override
+        public boolean hasNext() {
+            return index >= 0;
+        }
+
+        @Override
+        public T next() {
+            return elements[index--];
+        }
     }
 }

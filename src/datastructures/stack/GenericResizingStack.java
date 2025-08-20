@@ -42,15 +42,18 @@ public class GenericResizingStack<T> {
     }
 
     private void resize(int newCapacity) {
-        T[] temp = (T[]) new Object[newCapacity];
-        if (count >= 0) System.arraycopy(elements, 0, temp, 0, count);
-        elements = temp;
+        T[] newArray = (T[]) new Object[newCapacity];
+
+        for (int i = 0; i < count; i++) {
+            newArray[i] = elements[i];
+        }
+        elements = newArray;
     }
 
     @Override
     public String toString() {
         StringBuilder salida = new StringBuilder("[");
-        for (int i = 0; i < count; i++) {
+        for (int i = count - 1; i > 0; i--) {
             T element = elements[i];
 
             if (element instanceof String s) {

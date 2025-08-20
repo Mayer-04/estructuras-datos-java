@@ -2,13 +2,12 @@ package datastructures.stack;
 
 import java.util.Iterator;
 
-// LIFO (Last in, First out)
 @SuppressWarnings("unchecked")
-public class Stack<T> implements Iterable<T> {
+public class GenericResizingIterableStack<T> implements Iterable<T> {
     private T[] elements;
     private int count;
 
-    public Stack() {
+    public GenericResizingIterableStack() {
         elements = (T[]) new Object[1];
         count = 0;
     }
@@ -39,12 +38,7 @@ public class Stack<T> implements Iterable<T> {
         return count;
     }
 
-    /**
-     * Devuelve el valor del último elemento ingresado en la pila.
-     *
-     * @return Último elemento {@code T} de la pila
-     */
-    public T peek() {
+    public T peak() {
         return elements[count - 1];
     }
 
@@ -74,26 +68,5 @@ public class Stack<T> implements Iterable<T> {
         public T next() {
             return elements[index--];
         }
-    }
-
-
-    @Override
-    public String toString() {
-        StringBuilder salida = new StringBuilder("[");
-        for (int i = 0; i < count; i++) {
-            T element = elements[i];
-
-            if (element instanceof String s) {
-                salida.append('"').append(s).append('"');
-            } else {
-                salida.append(element);
-            }
-
-            if (i < count - 1) {
-                salida.append(", ");
-            }
-        }
-        salida.append("]");
-        return "stack: " + salida + "\t" + "total elements: " + count + "\n";
     }
 }

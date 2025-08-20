@@ -8,12 +8,12 @@ public class Main {
          * GenericResizingStack<Integer> stack1 = new GenericResizingStack<>();
          */
 
-        var stack1 = new GenericResizingStack<Integer>();
+        var genericStack = new GenericResizingStack<Integer>();
         var stack2 = new FixedCapacityStackOfStrings(3);
 
-        stack1.push(10);
-        stack1.push(20);
-        System.out.println(stack1);
+        genericStack.push(10);
+        genericStack.push(20);
+        System.out.println(genericStack);
 
         stack2.push("Hola");
         stack2.push("Mundo");

@@ -34,7 +34,7 @@ public class FixedCapacityStackOfStrings {
     @Override
     public String toString() {
         String salida = "[";
-        for (int i = 0; i < count; i++) {
+        for (int i = count - 1; i >= 0; i--) {
             salida += elements[i];
             if (i < count - 1) {
                 salida += ", ";

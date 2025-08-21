@@ -4,7 +4,8 @@
 
 ### instanceof
 
-Es un operador que dice: Es este objeto una instancia (es creado a partir de una clase) de este tipo (o de una subclase de ese tipo).
+Es un operador que dice: Es este objeto una instancia (es creado a partir de una clase) de este tipo (o de una subclase
+de ese tipo).
 
 **Ejemplo:**
 
@@ -12,9 +13,10 @@ Es un operador que dice: Es este objeto una instancia (es creado a partir de una
 // Comprueba si element es un String (o subclase).
 // Si lo es, crea una nueva variable 's' con el valor de element convertido a String.
 // En pocas palabras verifica + castea.
-if (element instanceof String s) {
+if(element instanceof
+String s){
 
-}
+        }
 ```
 
 ### operador condicional (ternario)
@@ -36,16 +38,31 @@ var message = (edad >= 18) ? "Mayor" : "Menor";
 
 ```java
 /**
-* Soy
-* un
-* comentario
-* multilínea
-*/
+ * Soy
+ * un
+ * comentario
+ * multilínea
+ */
+```
+
+### text block (multiline string)
+
+- strings multilínea sin concatenar `\n`
+- Los `text blocks` llegaron en forma final a Java SE 15.
+- Conservan los saltos de línea tal cual.
+
+```java
+String menu = """
+        Hello
+        World
+        !
+        """;
 ```
 
 ## Variables con `var` y tipos inferidos
 
-Se utiliza cuando queremos que Java `infiera` el tipo. Lo va a inferir dependiendo del tipo que se encuentre a la derecha del igual.
+Se utiliza cuando queremos que Java `infiera` el tipo. Lo va a inferir dependiendo del tipo que se encuentre a la
+derecha del igual.
 
 ```java
 var name = "Mayer";
@@ -59,10 +76,13 @@ var age = 25;
 - Se usa para clases de utilidades o helper.
 
 ```java
-public final class Validations { ... }
+public final class Validations {
+    // code
+}
 
 // Esto daría error:
-public class MisValidaciones extends Validations { ... } // ❌ no permitido
+public class MisValidaciones extends Validations {
+} // ❌ no permitido
 ```
 
 ### constructor `privado` en una clase
@@ -71,7 +91,7 @@ Significa que **nadie fuera de la clase puede crear instancias** de esa clase.
 
 Esto se usa para clases que:
 
-- Solo tienen **métodos estaticos**.
+- Solo tienen **métodos estáticos**.
 - Se usan como `utilidades/helper`.
 - No tienen sentido como “objeto” (no guardan estado).
 
@@ -123,7 +143,8 @@ public class ClaseB {
 En Java, un archivo `.class` es el resultado de compilar un archivo `.java` (el código fuente).
 
 - Contiene **bytecode**, que es un conjunto de instrucciones que entiende la **Java Virtual Machine (JVM)**.
-- No es código que tu computadora pueda ejecutar directamente como un programa nativo; necesita la JVM para interpretarlo o compilarlo a código máquina en tiempo de ejecución (Just-In-Time, JIT).
+- No es código que tu computadora pueda ejecutar directamente como un programa nativo; necesita la JVM para
+  interpretarlo o compilarlo a código máquina en tiempo de ejecución (Just-In-Time, JIT).
 - **Permiten portabilidad:** un `.class` se puede ejecutar en cualquier sistema que tenga **JVM**, sin recompilar.
 - Cualquier clase válida en Java se puede compilar, aunque no tenga un **main**.
 
@@ -142,12 +163,14 @@ Es un método **estático** de la **clase Arrays**.
 
 ### Stream
 
-En Java, un `Stream` es una secuencia de elementos sobre la que se pueden realizar operaciones funcionales (como filtrar, mapear, reducir) de manera declarativa.
+En Java, un `Stream` es una secuencia de elementos sobre la que se pueden realizar operaciones funcionales (como
+filtrar, mapear, reducir) de manera declarativa.
 
 - No almacena elementos; solo **provee operaciones** sobre los datos que ya existen en un array, colección o generador.
 - Arrays.stream(array) crea un **objeto IntStream** que conecta el array con operaciones de stream.
 - Cada operación intermedia _(filter)_ se encadena y se almacena internamente, pero no recorre los elementos.
-- Cuando llega la operación terminal _(forEach)_, se recorren los elementos uno por uno, aplicando todas las operaciones encadenadas.
+- Cuando llega la operación terminal _(forEach)_, se recorren los elementos uno por uno, aplicando todas las operaciones
+  encadenadas.
 - `Arrays.stream(array)` es para arrays, `.stream()` es para colecciones.
 
 ```css
@@ -159,14 +182,18 @@ Array / Colección  -->  Stream (intermedio) --> Stream (intermedio) ... --> Ope
 
 ```java
 // Los :: dicen “toma este método y pásalo como función”.
-Arrays.stream(numeros).forEach(System.out::println);
+Arrays.stream(numeros).
+
+forEach(System.out::println);
 ```
 
 ## ¿Qué es una excepción?
 
-En Java, una `excepción` es un evento que ocurre durante la ejecución de un programa y que interrumpe el flujo normal del mismo. Por ejemplo, intentar dividir por cero o acceder a un archivo que no existe.
+En Java, una `excepción` es un evento que ocurre durante la ejecución de un programa y que interrumpe el flujo normal
+del mismo. Por ejemplo, intentar dividir por cero o acceder a un archivo que no existe.
 
-Java tiene un sistema de manejo de excepciones muy robusto basado en clases. Todas las excepciones heredan de la clase base:
+Java tiene un sistema de manejo de excepciones muy robusto basado en clases. Todas las excepciones heredan de la clase
+base:
 
 ```java
 java.lang.Throwable
@@ -174,11 +201,24 @@ java.lang.Throwable
 
 - Throwable → clase base
 
-  - Error → problemas graves del sistema (p. ej., OutOfMemoryError) → no se deben capturar normalmente
-  - Exception → problemas que el programa puede manejar → sí se capturan
-    - Checked Exception → deben declararse o manejarse (p. ej., IOException)
-    - Unchecked Exception → no necesitan declararse (p. ej., NullPointerException)
+    - Error → problemas graves del sistema (p. ej., OutOfMemoryError) → no se deben capturar normalmente
+    - Exception → problemas que el programa puede manejar → sí se capturan
+        - Checked Exception → deben declararse o manejarse (p. ej., IOException)
+        - Unchecked Exception → no necesitan declararse (p. ej., NullPointerException)
 
 - **try:** bloque donde colocamos el código que puede lanzar excepciones.
 - **catch:** bloque que captura la excepción y permite manejarla.
 - **finally:** bloque opcional que se ejecuta siempre, ocurra o no excepción (ideal para cerrar recursos).
+
+## Leer datos con `Scanner`
+
+```java
+int option = sc.nextInt(); // lee el número, PERO no consume el salto de línea (\n)
+sc.
+
+nextLine();             // tienes que "limpiar" el buffer
+```
+
+- `nextInt()` solo lee el número (ej: 3), pero deja en el buffer el `\n` que se genera al pulsar **Enter**.
+- Si luego usas `nextLine()` para leer un string, lo primero que devuelve es ese `\n` pendiente → da la sensación de que "
+salta" la entrada.

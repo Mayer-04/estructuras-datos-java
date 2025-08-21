@@ -40,10 +40,7 @@ public class Bag<T> implements Iterable<T> {
     }
 
     public void clear() {
-        // elements = new String[elements.length];
-        for (int i = 0; i < size; i++) {
-            elements[i] = null;
-        }
+        elements = (T[]) new Object[elements.length];
         size = 0;
     }
 
@@ -85,7 +82,9 @@ public class Bag<T> implements Iterable<T> {
         private int index = 0;
 
         @Override
-        public boolean hasNext() { return index < size; }
+        public boolean hasNext() {
+            return index < size;
+        }
 
         @Override
         public T next() {

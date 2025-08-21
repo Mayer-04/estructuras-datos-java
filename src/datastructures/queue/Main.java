@@ -1,36 +1,50 @@
 package datastructures.queue;
 
+import java.util.Scanner;
+
 public class Main {
+
+    private static final String MENU = """
+            Seleccione una opción:
+            ----------------------
+            1) Agregar un elemento
+            2) Eliminar un elemento
+            3) Mostrar el primer elemento
+            4) Mostrar todos los elementos
+            5) Salir
+            """;
 
     public static void main(String[] args) {
         var queue = new Queue<String>();
+        var sc = new Scanner(System.in);
+        var interactiveQueue = new InteractiveQueue(queue, sc);
+        var running = true;
 
-        queue.enqueue("Mayer");
-        queue.enqueue("Jose");
-        queue.enqueue("Juan");
-        queue.enqueue("Johan");
+        while (running) {
+            System.out.println(MENU);
+            System.out.println("Ingrese su opción: ");
 
-        System.out.println(queue); // Output: queue: ["Mayer", "Jose", "Juan", "Johan"]
-        System.out.println(queue.size()); // Output: 4
+            String line = sc.nextLine(); // leemos la línea entera
+            int option;
+            try {
+                option = Integer.parseInt(line.trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Entrada inválida. Introduce un número entre 1 y 5.");
+                continue;
+            }
 
-        System.out.println(queue.dequeue()); // Output: Mayer
-        System.out.println(queue.dequeue()); // Output: Jose
-
-        System.out.println(queue); // Output: queue: ["Juan", "Johan"]
-        System.out.println(queue.size()); // Output: 2
-
-        System.out.println(queue.peek()); // Output: Juan
-
-        queue.clear();
-
-        System.out.println(queue); // Output: []
-        System.out.println(queue.isEmpty()); // Output: true
-
-        try {
-            var firstElement = queue.dequeue();
-            System.out.println("primer elemento: " + firstElement);
-        } catch (EmptyQueueException e) {
-            System.err.println(e.getMessage());
+            switch (option) {
+                case 1 -> interactiveQueue.enqueue();
+                case 2 -> interactiveQueue.dequeue();
+                case 3 -> interactiveQueue.peek();
+                case 4 -> interactiveQueue.showElements();
+                case 5 -> {
+                    running = false;
+                    System.out.println("Saliendo del programa...");
+                }
+                default -> System.out.println("Opción inválida, intenta de nuevo.");
+            }
         }
+        // sc.close();
     }
 }

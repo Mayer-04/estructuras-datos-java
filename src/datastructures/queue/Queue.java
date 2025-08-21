@@ -31,6 +31,10 @@ public class Queue<T> implements Iterable<T> {
         elements[size - 1] = null;
 
         size--;
+        
+        if (size > 0 && size == elements.length / 4) {
+            resize(elements.length / 2);
+        }
 
         return item;
     }

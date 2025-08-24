@@ -210,15 +210,64 @@ java.lang.Throwable
 - **catch:** bloque que captura la excepción y permite manejarla.
 - **finally:** bloque opcional que se ejecuta siempre, ocurra o no excepción (ideal para cerrar recursos).
 
-## Leer datos con `Scanner`
+## Error más comun cuando se usa `Scanner` en Java
+
+Cuando usamos un objeto `Scanner` en Java para leer datos de la consola, cada método (`nextInt()`, `nextDouble()`,
+`nextLine()`, etc.) trabaja de forma distinta:
+
+- `nextInt()` y `nextDouble()` leen únicamente el número, pero dejan en el buffer el salto de línea `(\n)` que se generó
+  cuando presionaste `Enter`.
+- `nextLine()`, en cambio, lee hasta encontrar un salto de línea.
+-
+
+El problema ocurre cuando después de un `nextInt()` (o similar) llamamos a `nextLine()`. Como en el buffer quedó ese
+`\n` pendiente, el `nextLine()` lo consume inmediatamente y parece que “se saltó” la entrada del usuario.
+
+**Ejemplo del problema:**
 
 ```java
-int option = sc.nextInt(); // lee el número, PERO no consume el salto de línea (\n)
-sc.
+import java.util.Scanner;
 
-nextLine();             // tienes que "limpiar" el buffer
+public class EjemploScanner {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Ingresa un número: ");
+        int numero = scanner.nextInt();
+
+        System.out.print("Ingresa tu nombre: ");
+        String nombre = scanner.nextLine(); // <-- Aquí ocurre el problema
+
+        System.out.println("Número: " + numero);
+        System.out.println("Nombre: " + nombre);
+    }
+}
 ```
 
-- `nextInt()` solo lee el número (ej: 3), pero deja en el buffer el `\n` que se genera al pulsar **Enter**.
-- Si luego usas `nextLine()` para leer un string, lo primero que devuelve es ese `\n` pendiente → da la sensación de que "
-salta" la entrada.
+**Entrada esperada:**
+
+```bash
+25
+Juan
+```
+
+**Salida real:**
+
+````shell
+Número: 25
+Nombre:
+````
+
+El programa no esperó a que escribieras “Juan”, porque el `nextLine()` se quedó con el `\n` que sobró del `nextInt()`.
+
+**Solución:**
+
+La forma más simple es “limpiar” el buffer después de usar `nextInt()`, `nextDouble()` o similares, agregando un
+`scanner.nextLine()` vacío.
+
+Otra opción es leer todo con `nextLine()` y luego convertir manualmente (por ejemplo `Integer.parseInt()`).
+
+**En resumen:** el problema surge porque `nextInt()` y similares no consumen él `Enter`. Al usar `nextLine()` después,
+este
+recoge ese salto de línea y parece que el programa “se saltó” la entrada.
+La solución es limpiar el buffer con un `scanner.nextLine()` extra o usar `nextLine()` siempre y convertir los datos.

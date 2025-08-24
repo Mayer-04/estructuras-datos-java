@@ -31,6 +31,18 @@ public class Stack<T> implements Iterable<T> {
         return item;
     }
 
+//    public T pop() {
+//        T item = elements[size - 1];
+//        elements[size - 1] = null;
+//        size--;
+//
+//        if (size > 0 && size == elements.length / 4) {
+//            resize(elements.length / 2);
+//        }
+//        return item;
+//    }
+
+
     public boolean isEmpty() {
         return size == 0;
     }
@@ -40,12 +52,17 @@ public class Stack<T> implements Iterable<T> {
     }
 
     /**
-     * Devuelve el valor del último elemento ingresado en la pila.
+     * Devuelve el último elemento ingresado en la pila.
      *
-     * @return Último elemento {@code T} de la pila
+     * @return último elemento {@code T} de la pila
      */
     public T peek() {
         return elements[size - 1];
+    }
+
+    public void clear() {
+        elements = (T[]) new Object[elements.length];
+        size = 0;
     }
 
     private void resize(int newCapacity) {
@@ -75,7 +92,7 @@ public class Stack<T> implements Iterable<T> {
                 salida.append(element);
             }
 
-            if (i < size - 1) {
+            if (i > 0) {
                 salida.append(", ");
             }
         }

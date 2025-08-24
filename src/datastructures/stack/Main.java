@@ -3,20 +3,16 @@ package datastructures.stack;
 public class Main {
 
     public static void main(String[] args) {
-        /**
-         * GenericResizingStack<Integer> stack1 = new GenericResizingStack<>();
-         * GenericResizingStack<Integer> stack1 = new GenericResizingStack<>();
-         */
+        var stack = new Stack<String>();
 
-        var genericStack = new GenericResizingStack<Integer>();
-        var stack2 = new FixedCapacityStackOfStrings(3);
+        stack.push("Mayer");
+        stack.push("Andres");
+        stack.push("Chaves");
 
-        genericStack.push(10);
-        genericStack.push(20);
-        System.out.println(genericStack);
+        System.out.println(stack);
 
-        stack2.push("Hola");
-        stack2.push("Mundo");
-        System.out.println(stack2);
+        System.out.println("Elemento eliminado: " + stack.pop());
+
+        System.out.printf("Nueva pila: %s\n", stack);
     }
 }

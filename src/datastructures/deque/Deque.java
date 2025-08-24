@@ -21,7 +21,6 @@ public class Deque<T> implements Iterable<T> {
         if (size == elements.length) {
             resize(elements.length * 2);
         }
-        // índices circulares
         front = (front - 1 + elements.length) % elements.length;
         elements[front] = element;
         size++;
@@ -41,6 +40,7 @@ public class Deque<T> implements Iterable<T> {
         elements[front] = null;
         front = (front + 1) % elements.length;
         size--;
+
         if (size > 0 && size == elements.length / 4) {
             resize(elements.length / 2);
         }
@@ -52,6 +52,7 @@ public class Deque<T> implements Iterable<T> {
         elements[rear] = null;
         rear = (rear - 1 + elements.length) % elements.length;
         size--;
+
         if (size > 0 && size == elements.length / 4) {
             resize(elements.length / 2);
         }
@@ -79,6 +80,7 @@ public class Deque<T> implements Iterable<T> {
         for (int i = 0; i < size; i++) {
             newArray[i] = elements[(front + i) % elements.length];
         }
+
         elements = newArray;
         front = 0;
         rear = size - 1;

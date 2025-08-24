@@ -22,7 +22,7 @@ public class Main {
 
         while (running) {
             System.out.println(MENU);
-            System.out.println("Ingrese su opción: ");
+            System.out.print("Ingrese su opción: ");
 
             String line = sc.nextLine(); // leemos la línea entera
             int option;
@@ -45,6 +45,7 @@ public class Main {
                 default -> System.out.println("Opción inválida, intenta de nuevo.");
             }
         }
-        // sc.close();
+
+        sc.close();
     }
 }

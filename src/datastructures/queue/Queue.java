@@ -57,10 +57,7 @@ public class Queue<T> implements Iterable<T> {
     }
 
     public void clear() {
-        // elements = new String[elements.length];
-        for (int i = 0; i < size(); i++) {
-            elements[i] = null;
-        }
+        elements = (T[]) new Object[elements.length];
         size = 0;
     }
 

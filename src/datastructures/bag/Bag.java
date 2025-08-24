@@ -46,11 +46,9 @@ public class Bag<T> implements Iterable<T> {
 
     private void resize(int newCapacity) {
         T[] newArray = (T[]) new Object[newCapacity];
-
         for (int i = 0; i < size; i++) {
             newArray[i] = elements[i];
         }
-
         elements = newArray;
     }
 

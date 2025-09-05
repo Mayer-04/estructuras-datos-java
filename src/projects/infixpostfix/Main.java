@@ -1,4 +1,4 @@
-package projects.infix.postfix;
+package projects.infixpostfix;
 
 import datastructures.queue.Queue;
 
@@ -23,6 +23,11 @@ public class Main {
         infixToPostfix.convertInfixToPostfix();
 
         var postfixEvaluator = new PostfixEvaluator(queueExit);
-        System.out.println("Resultado final: " + postfixEvaluator.evaluate());
+
+        try {
+            System.out.println("Resultado final: " + postfixEvaluator.evaluate());
+        } catch (IllegalArgumentException e) {
+            System.err.println("Ocurrió un error: " + e.getMessage());
+        }
     }
 }

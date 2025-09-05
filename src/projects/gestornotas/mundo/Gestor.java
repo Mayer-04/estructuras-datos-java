@@ -1,4 +1,4 @@
-package gestornotas.mundo;
+package projects.gestornotas.mundo;
 
 public class Gestor {
 

@@ -1,14 +1,47 @@
-package projects.infix.postfix;
+package projects.infixpostfix;
 
 import datastructures.queue.Queue;
 import datastructures.stack.Stack;
 
+/**
+ * Convierte una expresión en notación infija a notación postfija
+ * utilizando el algoritmo de Shunting Yard de Dijkstra.
+ * <p>
+ * Usa una {@link Queue} como entrada (tokens en notación infija),
+ * una {@link Queue} como salida (tokens en notación postfija)
+ * y una {@link Stack} para manejar los operadores según su precedencia.
+ * </p>
+ *
+ * <h2>Ejemplo de uso</h2>
+ * <pre>{@code
+ * Queue<String> entrada = new Queue<>();
+ * Queue<String> salida = new Queue<>();
+ *
+ * // Expresión: 3 + 4 * 2
+ * entrada.enqueue("3");
+ * entrada.enqueue("+");
+ * entrada.enqueue("4");
+ * entrada.enqueue("*");
+ * entrada.enqueue("2");
+ *
+ * InfixToPostfix converter = new InfixToPostfix(entrada, salida);
+ * converter.convertInfixToPostfix();
+ *
+ * System.out.println(salida); // [3, 4, 2, *, +]
+ * }</pre>
+ */
 public class InfixToPostfix {
 
     private final Queue<String> queueEntry;
     private final Queue<String> queueExit;
     private final Stack<String> stack;
 
+    /**
+     * Crea un nuevo conversor de notación infija a postfija.
+     *
+     * @param queueEntry la cola de entrada con los tokens en notación infija
+     * @param queueExit  la cola de salida donde se almacenará la notación postfija
+     */
     public InfixToPostfix(Queue<String> queueEntry, Queue<String> queueExit) {
         this.queueEntry = queueEntry;
         this.queueExit = queueExit;
@@ -51,20 +84,19 @@ public class InfixToPostfix {
         while (!queueEntry.isEmpty()) {
             String token = queueEntry.dequeue();
 
-            // Si el token es un número (según la expresión regular),
-            // se envía directamente a la cola de salida.
             if (token.matches("\\d+")) {
                 queueExit.enqueue(token);
             } else {
-                // Mientras haya operadores con mayor o igual precedencia
+
                 while (!stack.isEmpty() && getPrecedence(token) <= getPrecedence(stack.peek())) {
                     queueExit.enqueue(stack.pop());
                 }
+
                 stack.push(token);
             }
         }
 
-        // Vaciar la pila de operadores
+
         while (!stack.isEmpty()) {
             queueExit.enqueue(stack.pop());
         }

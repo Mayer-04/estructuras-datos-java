@@ -1,13 +1,40 @@
-package projects.infix.postfix;
+package projects.infixpostfix;
 
 import datastructures.queue.Queue;
 import datastructures.stack.Stack;
 
+/**
+ * Evalúa expresiones matemáticas en notación postfija.
+ * <p>
+ * Usa una {@link Queue} que contiene la expresión postfija como entrada
+ * y una {@link Stack} de enteros para realizar los cálculos paso a paso.
+ * </p>
+ *
+ * <h2>Ejemplo de uso</h2>
+ * <pre>{@code
+ * Queue<String> salida = new Queue<>();
+ * salida.enqueue("3");
+ * salida.enqueue("4");
+ * salida.enqueue("2");
+ * salida.enqueue("*");
+ * salida.enqueue("+");
+ *
+ * PostfixEvaluator evaluator = new PostfixEvaluator(salida);
+ * int resultado = evaluator.evaluate();
+ *
+ * System.out.println(resultado); // 11
+ * }</pre>
+ */
 public class PostfixEvaluator {
 
     private final Queue<String> queueExit;
     private final Stack<Integer> resultStack;
 
+    /**
+     * Crea un evaluador para una expresión postfija.
+     *
+     * @param queueExit la cola que contiene los tokens en notación postfija
+     */
     public PostfixEvaluator(Queue<String> queueExit) {
         this.queueExit = queueExit;
         this.resultStack = new Stack<>();
@@ -29,13 +56,13 @@ public class PostfixEvaluator {
      */
     public int evaluate() {
         while (!queueExit.isEmpty()) {
+
             String token = queueExit.dequeue();
 
             if (token.matches("\\d+")) {
-                // Si es un número, se apila directamente
                 resultStack.push(Integer.parseInt(token));
             } else {
-                // Operador: desapilar dos operandos
+
                 int rightOperand = resultStack.pop();
                 int leftOperand = resultStack.pop();
 

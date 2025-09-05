@@ -1,6 +1,6 @@
-package gestornotas.interfaz;
+package projects.gestornotas.interfaz;
 
-import gestornotas.mundo.Gestor;
+import projects.gestornotas.mundo.Gestor;
 
 import java.util.Scanner;
 

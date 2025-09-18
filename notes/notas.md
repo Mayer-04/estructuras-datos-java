@@ -3,13 +3,29 @@
 ## Conventional Commits
 
 - **feat:** nueva funcionalidad.
-- **fix:** corrección de error.
-- **docs:** cambios en documentación.
-- **style:** cambios de formato, sin afectar la lógica.
-- **refactor:** reestructuración del código sin cambiar funcionalidad.
-- **chore:** tareas varias que no afectan directamente a la app (configuración, dependencias).
+- **fix:** Cuando corriges un error o bug que afectaba al funcionamiento.
+- **docs:** Cuando modificas solo documentación (README, comentarios, ejemplos, wiki).
+- **style:** Cuando haces cambios de formato o estilo que no alteran la lógica del código.
+  (espacios, comas, indentación, orden de imports, nombres de variables más claros).
+- **refactor:** Cuando reestructuras o mejoras código existente sin cambiar lo que hace.
+  (limpieza, mejor legibilidad, dividir funciones grandes, hacer más eficiente sin cambiar resultados).
+- **chore:** Se usa para tareas de mantenimiento (ej.: cambios de dependencias, configuración, infraestructura).
+- **test:** Cuando agregas o modificas pruebas (tests).
+- **perf:** Cuando haces cambios para mejorar el rendimiento.
 
-- Cola circular.
+## Guía práctica para elegir
+
+- ¿Agregaste algo nuevo? → **feat**
+- ¿Corregiste algo roto? → **fix**
+- ¿Solo documentación? → **docs**
+- ¿Formato o estilo? → **style**
+- ¿Reestructuraste código sin cambiar funcionalidad? → **refactor**
+- ¿Mantenimiento/configuración? → **chore**
+- ¿Agregaste/modificaste tests? → **test**
+- ¿Mejoraste rendimiento? → **perf**
+- ¿Cambios en pipelines o CI/CD? → **ci**
+- ¿Cambios en dependencias/build? → **build**
+- ¿Revertiste un commit? → **revert**
 
 ```java
             // option lee el número entero pero,

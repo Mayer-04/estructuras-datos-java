@@ -144,6 +144,31 @@ public class Deque<T> implements Iterable<T> {
     }
 
     /**
+     * Elimina todos los elementos de la deque, dejándola vacía.
+     * Usa una estrategia híbrida:
+     * - Si la cantidad de elementos es pequeña, limpia con un bucle (evita crear basura).
+     * - Si la cantidad de elementos es grande, crea un nuevo arreglo vacío
+     *   (más eficiente que recorrer millones de elementos).
+     */
+    public void clear() {
+        final int THRESHOLD = 10_000;
+
+        if (size <= THRESHOLD) {
+            int index = front;
+            for (int i = 0; i < size; i++) {
+                elements[index] = null;
+                index = (index + 1) % elements.length;
+            }
+        } else {
+            elements = (T[]) new Object[elements.length];
+        }
+
+        size = 0;
+        front = 0;
+        rear = -1;
+    }
+
+    /**
      * Redimensiona el arreglo interno a una nueva capacidad.
      * <p>
      * Se utiliza tanto para crecer como para reducir el espacio disponible.

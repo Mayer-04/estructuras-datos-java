@@ -14,7 +14,7 @@ public class Main {
             5) Salir
             """;
 
-    public static void main(String[] args) {
+    void main() {
         var queue = new Queue<String>();
         var sc = new Scanner(System.in);
         var interactiveQueue = new InteractiveQueue(queue, sc);

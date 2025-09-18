@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    void main() {
         var queueEntry = new Queue<String>();
         var queueExit = new Queue<String>();
         var scanner = new Scanner(System.in);

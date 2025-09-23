@@ -6,7 +6,7 @@ public class LinkedList<T> {
     private int size;
 
     public LinkedList() {
-        this.head = null;
+        this.head = null; // first
         this.tail = null;
         this.size = 0;
     }
@@ -27,7 +27,7 @@ public class LinkedList<T> {
     }
 
     public void prepend(T element) {
-        var node = new Node<T>(element);
+        Node<T> node = new Node<T>(element);
 
         if (head == null) {
             head = node;
@@ -46,11 +46,9 @@ public class LinkedList<T> {
     }
 
     public void remove(T element) {
-
         Node<T> current = head;
 
         while (current != null) {
-
             if (current.value == element) {
                 current.value = null;
                 current = current.next;

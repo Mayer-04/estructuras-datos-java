@@ -16,7 +16,7 @@
  *
  * <h2>Estructuras de Datos Disponibles</h2>
  *
- * <h3>{@link datastructures.Bag} - Multiconjunto</h3>
+ * <h3>{@link datastructures.bag.Bag} - Multiconjunto</h3>
  * <p>
  * Colección que permite elementos duplicados sin mantener un orden específico.
  * Ideal para almacenar elementos donde el orden no importa pero sí la multiplicidad.

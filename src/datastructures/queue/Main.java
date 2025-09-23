@@ -21,15 +21,15 @@ public class Main {
         var running = true;
 
         while (running) {
-            System.out.println(MENU);
-            System.out.print("Ingrese su opción: ");
+            IO.println(MENU);
+            IO.print("Ingrese su opción: ");
 
             String line = sc.nextLine(); // leemos la línea entera
             int option;
             try {
                 option = Integer.parseInt(line.trim());
             } catch (NumberFormatException e) {
-                System.out.println("Entrada inválida. Introduce un número entre 1 y 5.");
+                IO.println("Entrada inválida. Introduce un número entre 1 y 5.");
                 continue;
             }
 
@@ -40,9 +40,9 @@ public class Main {
                 case 4 -> interactiveQueue.showElements();
                 case 5 -> {
                     running = false;
-                    System.out.println("Saliendo del programa...");
+                    IO.println("Saliendo del programa...");
                 }
-                default -> System.out.println("Opción inválida, intenta de nuevo.");
+                default -> IO.println("Opción inválida, intenta de nuevo.");
             }
         }
 

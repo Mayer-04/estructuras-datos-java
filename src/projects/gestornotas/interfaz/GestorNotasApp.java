@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class GestorNotasApp {
 
-    public static void main(String[] args) {
+    void main() {
         Scanner sc = new Scanner(System.in);
 
         int capacidadMaxima, opcion, encontrado;

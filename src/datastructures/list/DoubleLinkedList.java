@@ -18,6 +18,10 @@ public class DoubleLinkedList<T> implements Iterable<T> {
             predecesor.next = newNode;
     }
 
+    public boolean add(T item) {
+        return false;
+    }
+
     public void add(T item, int index) {
         final Node predecesor
         if (index == count) {
@@ -70,7 +74,7 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         return false;
     }
 
-    public T get() {
+    public T get(int index) {
 
     }
 
@@ -87,7 +91,7 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         //return first == null;
     }
 
-    public boolean remove() {
+    public boolean remove(T item) {
 
     }
 
@@ -109,15 +113,11 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         return count;
     }
 
-    public boolean equals() {
+    public int indexOf(T item) {
 
     }
 
-    public int indexOf() {
-
-    }
-
-    public void set() {
+    public T set(int index, T item) {
 
     }
 

@@ -91,14 +91,12 @@ public class Double<T> implements Iterable<T> {
         newNode.item = item;
 
         if (last == null) {
-            // Lista vacía
             first = newNode;
-            last = newNode;
         } else {
             newNode.prev = last;
             last.next = newNode;
-            last = newNode;
         }
+        last = newNode;
         count++;
     }
 
